@@ -1,0 +1,37 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
+<link rel="import" href="/sys/paper-alert-dialog/paper-alert-dialog.html"/>
+
+<template>
+    <template is="dom-bind">
+
+        <template is="dom-if" if="{{model.HasMessage}}">
+            <paper-alert-dialog title="{{model.MessageType}}"
+                                confirm-button="OK"
+                                opened="true">
+                {{model.Message}} (Error code {{model.ErrorCode}})
+            </paper-alert-dialog>
+        </template>
+        
+        <h3>Mopedo Basic DSP</h3>
+
+        <h4>Available resources:</h4>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Resource name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <template is="dom-repeat" items="{{model.Resources}}"as="resource">
+                <tr>
+                    <td>
+                        <a href="{{resource.Url}}">{{resource.Name}}</a>
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </template>
+</template>

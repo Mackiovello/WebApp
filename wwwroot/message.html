@@ -1,0 +1,14 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/paper-alert-dialog/paper-alert-dialog.html"/>
+
+<template>
+    <template is="dom-bind">
+        <template is="dom-if" if="{{model.HasMessage}}">
+            <paper-alert-dialog title="{{model.MessageType}}"
+                                confirm-button="OK"
+                                opened="true">
+                {{model.Message}} (Error code {{model.ErrorCode}})
+            </paper-alert-dialog>
+        </template>
+    </template>
+</template>
