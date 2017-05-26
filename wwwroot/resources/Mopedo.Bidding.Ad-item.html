@@ -1,11 +1,139 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
+<link rel="import" href="/sys/paper-alert-dialog/paper-alert-dialog.html"/>
 
 <template>
-    <template is="dom-bind">
-        
-        This is the view for a single ad
+    <style>
+        .dsp-item {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 2px 5px #999;
+            padding: 20px;
+            background-color: white;
+        }
 
-        <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
+        .dsp-item__headline {
+            font-size: 3em;
+            text-align: center;
+            color: #333;
+            margin: 0 0 32px 0;
+        }
+
+        .dsp-item__row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dsp-item__row label {
+            width: 45%;
+        }
+
+        .dsp-markup-textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+    </style>
+    <template is="dom-bind">
+                   
+        <template is="dom-if" if="{{model.HasMessage}}">
+            <paper-alert-dialog title="{{model.MessageType}}"
+                                confirm-button="OK"
+                                opened="true">
+                {{model.Message}} (Error code {{model.ErrorCode}})
+            </paper-alert-dialog>
+        </template>
+            <h1 class="dsp-item__headline">Mopedo.Bidding.Ad</h1>
+            <form class="dsp-item">
+                <fieldset>
+                    <legend>Basic info</legend>
+                    <div class="dsp-item__row">
+                        <label>Ad Id
+                            <input class="form-control" type="text" value="{{model.AdId$::input}}">
+                            <small class="form-text text-muted">A unique id for the ad</small>
+                        </label>
+                        <label>Label
+                            <input class="form-control" type="text" value="{{model.Label$::input}}">
+                            <small class="form-text text-muted">A describing label for the ad</small>
+                        </label>
+                    </div>
+                </fieldset>
+            </form>
+
+            <form class="dsp-item">
+                <fieldset>
+                    <legend>Ad Type</legend>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
+                            banner
+                        </label>    
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
+                            video
+                        </label>
+                    </div>
+                        <div class="form-check disabled">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="adType" value="native" on-click="setRadioValue">
+                            native
+                        </label>
+                    </div>
+                </fieldset>
+            </form>
+
+            <form class="dsp-item">
+                <fieldset>
+                    <legend>Dimensions</legend>
+                    <div class="form-group dsp-item__row">
+                        <label>Min width
+                            <input class="form-control" type="number" value="{{model.MinWidth$::input}}">
+                        </label>
+                        <label>Max width
+                            <input class="form-control" type="number" value="{{model.MaxWidth$::input}}">
+                        </label>
+                    </div>
+                    <div class="form-group dsp-item__row">
+                        <label>Min height
+                            <input class="form-control" type="number" value="{{model.MinHeight$::input}}">
+                        </label>
+                        <label>Max height
+                            <input class="form-control" type="number" value="{{model.MaxHeight$::input}}">
+                        </label>
+                    </div>
+                </fieldset>
+            </form>
+
+            <form class="dsp-item">
+                <fieldset>
+                    <legend>Markup</legend>
+                    <textarea class="form-control dsp-markup-textarea" placeholder="Enter your markup here"></textarea>
+                </fieldset>
+            </form>
+
+            <form class="dsp-item">
+                <fieldset>
+                    <legend>Categories</legend>
+                    <input class="form-control"type="text">
+                    <small class="form-text text-muted">Comma-separated IAB codes describing the content</small>
+                </fieldset>
+            </form>
+            
+            <div class="dsp-item">
+                <button class="btn btn-success" value="{{model.Save$::click}}" on onmouseup="++this.value">Save</button>
+                <button class="btn btn-default" value="{{model.Close$::click}}" on onmouseup="++this.value">Close</button>
+            </div>
+            
+            <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
     </template>
+    <script>
+        (function () {
+            const script = document._currentScript || document.currentScript;
+            const template = script.previousElementSibling;
+
+            template.setRadioValue = (event) => template.model.AdType$ = event.target.value;
+        })();
+    </script>
 </template>
