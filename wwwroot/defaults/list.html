@@ -4,47 +4,56 @@
 
 <template>
     <template is="dom-bind">
-        <h3>{{model.ResourceName}}</h3>
+        <style>
+            .dsp-list-wrapper {
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 2px 5px #999;
+            }
+        </style>
+        <div class="dsp-list-wrapper">
+            <h3>{{model.ResourceName}}</h3>
 
-        <template is="dom-if" if="{{model.HasMessage}}">
-            <paper-alert-dialog title="{{model.MessageType}}"
-                                confirm-button="OK"
-                                opened="true">
-                {{model.Message}} (Error code {{model.ErrorCode}})
-            </paper-alert-dialog>
-        </template>
+            <template is="dom-if" if="{{model.HasMessage}}">
+                <paper-alert-dialog title="{{model.MessageType}}"
+                                    confirm-button="OK"
+                                    opened="true">
+                    {{model.Message}} (Error code {{model.ErrorCode}})
+                </paper-alert-dialog>
+            </template>
 
-        <template is="dom-if" if="{{model.CanInsert}}">
-            <div>
-                <button class="btn btn-sm btn-primary" value="{{model.Add$::click}}" on onmouseup="++this.value">Add</button>
-            </div>
-        </template>
-        <table class="table">
-            <thead>
-            <tr>
-                <template is="dom-repeat" items="{{model.TableHead}}">
-                    <th>{{item}}</th>
-                </template>
-            </tr>
-            </thead>
-
-            <tbody>
-            <template is="dom-repeat" items="{{model.Entities}}" as="row">
+            <template is="dom-if" if="{{model.CanInsert}}">
+                <div>
+                    <button class="btn btn-sm btn-primary" value="{{model.Add$::click}}" on onmouseup="++this.value">Add</button>
+                </div>
+            </template>
+            <table class="table">
+                <thead>
                 <tr>
-                    <template is="dom-repeat" items="{{model.TableHead}}" as="name">
-                        <template is="dom-if" if="{{unique(name, model.UniqueIdentifiers)}}">
-                            <td>
-                                <a href="{{model.ResourcePath}}/{{name}}={{byname(row,name)}}">{{byname(row,name)}}</a>
-                            </td>
-                        </template>
-                        <template is="dom-if" if="{{!unique(name, model.UniqueIdentifiers)}}">
-                            <td>{{byname(row,name)}}</td>
-                        </template>
+                    <template is="dom-repeat" items="{{model.TableHead}}">
+                        <th>{{item}}</th>
                     </template>
                 </tr>
-            </template>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                <template is="dom-repeat" items="{{model.Entities}}" as="row">
+                    <tr>
+                        <template is="dom-repeat" items="{{model.TableHead}}" as="name">
+                            <template is="dom-if" if="{{unique(name, model.UniqueIdentifiers)}}">
+                                <td>
+                                    <a href="{{model.ResourcePath}}/{{name}}={{byname(row,name)}}">{{byname(row,name)}}</a>
+                                </td>
+                            </template>
+                            <template is="dom-if" if="{{!unique(name, model.UniqueIdentifiers)}}">
+                                <td>{{byname(row,name)}}</td>
+                            </template>
+                        </template>
+                    </tr>
+                </template>
+                </tbody>
+            </table>
+        </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
     </template>
