@@ -1,5 +1,4 @@
 {
-  // general:
   "Html": "",
   "ResourceName": "",
   "ResourcePath": "",
@@ -7,21 +6,12 @@
   "Message": "",
   "ErrorCode": 0,
   "MessageType": "",
-  "HasMessage":  false, 
-
-  // data:
-
-  "Entity$": {},
-  "Members$": [{}],
-  "ReadOnlyMembers": [""],
-
-  // buttons:
-
+  "HasMessage": false,
+  "Entity": {},
   "Save$": 0,
   "Close$": 0,
-  "AddMember$": 0,
-
-  // other:
-
+  "AddElementTo$": "",
+  "SaveRedirectUrl$": "",
+  "CloseRedirectUrl$": "", 
   "Static": false
 }
