@@ -1,0 +1,8 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
+
+<template>
+    <template id="main" is="dom-bind">
+        <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
+    </template>
+</template>
