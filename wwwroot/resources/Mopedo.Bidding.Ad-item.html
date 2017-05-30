@@ -49,11 +49,11 @@
                     <legend>Basic info</legend>
                     <div class="dsp-item__row">
                         <label>Ad Id
-                            <input class="form-control" type="text" value="{{model.Entity$.AdId$::input}}">
+                            <input class="form-control" type="text" value="{{model.Entity.AdId$::input}}">
                             <small class="form-text text-muted">A unique id for the ad</small>
                         </label>
                         <label>Label
-                            <input class="form-control" type="text" value="{{model.Entity$.Label$::input}}">
+                            <input class="form-control" type="text" value="{{model.Entity.Label$::input}}">
                             <small class="form-text text-muted">A describing label for the ad</small>
                         </label>
                     </div>
@@ -89,18 +89,18 @@
                     <legend>Dimensions</legend>
                     <div class="form-group dsp-item__row">
                         <label>Min width
-                            <input class="form-control" type="number" value="{{model.Entity$.MinWidth$::input}}">
+                            <input class="form-control" type="number" value="{{model.Entity.MinWidth$::input}}">
                         </label>
                         <label>Max width
-                            <input class="form-control" type="number" value="{{model.Entity$.MaxWidth$::input}}">
+                            <input class="form-control" type="number" value="{{model.Entity.MaxWidth$::input}}">
                         </label>
                     </div>
                     <div class="form-group dsp-item__row">
                         <label>Min height
-                            <input class="form-control" type="number" value="{{model.Entity$.MinHeight$::input}}">
+                            <input class="form-control" type="number" value="{{model.Entity.MinHeight$::input}}">
                         </label>
                         <label>Max height
-                            <input class="form-control" type="number" value="{{model.Entity$.MaxHeight$::input}}">
+                            <input class="form-control" type="number" value="{{model.Entity.MaxHeight$::input}}">
                         </label>
                     </div>
                 </fieldset>
@@ -109,22 +109,26 @@
             <form class="dsp-item">
                 <fieldset>
                     <legend>Markup</legend>
-                    <textarea class="form-control dsp-markup-textarea" placeholder="Enter your markup here" value="{{model.Entity$.AdMarkup$::input}}"></textarea>
+                    <textarea class="form-control dsp-markup-textarea" placeholder="Enter your markup here" value="{{model.Entity.AdMarkup$::input}}"></textarea>
                 </fieldset>
             </form>
 
             <form class="dsp-item">
                 <fieldset>
                     <legend>Categories</legend>
-                    <input class="form-control" type="text" value="{{model.Entity$.Categories$::input}}">
-                    <small class="form-text text-muted">Comma-separated IAB codes describing the content</small>
+                    <template is="dom-repeat" items="{{model.Entity.Categories$}}">
+                        <div class="form-group">
+                            <label>Category {{index}}<input class="form-control" type="text" value="{{item::change}}"></label>
+                        </div>
+                    </template>
+                    <button class="btn btn-primary" on-click="addCategory">Add category</button>
                 </fieldset>
             </form>
 
             <form class="dsp-item">
                 <fieldset>
                     <legend>Landing page</legend>
-                    <input class="form-control" type="text" value="{{model.Entity$.LandingPage$::input}}">
+                    <input class="form-control" type="text" value="{{model.Entity.LandingPage$::input}}">
                     <small class="form-text text-muted">Landing page for the ad</small>
                 </fieldset>
             </form>
@@ -132,16 +136,15 @@
             <form class="dsp-item">
                 <fieldset>
                     <legend>Tracking</legend>
-
                     <div class="form-group">
                         <label>
-                            <input class="form-check" type="checkbox" checked="{{model.Entity$.AutoClickTrackingEnabled$::change}}">
+                            <input class="form-check" type="checkbox" checked="{{model.Entity.AutoClickTrackingEnabled$::change}}">
                             Enable auto click tracking
                         </label>
                     </div>                    
                     <div class="form-group">
                         <label>
-                            <input class="form-check" type="checkbox" checked="{{model.Entity$.ImplementClickTrackingMacro$}}" disabled>
+                            <input class="form-check" type="checkbox" checked="{{model.Entity.ImplementClickTrackingMacro}}" disabled>
                             Implement click tracking macro
                         </label>
                     </div>
@@ -149,12 +152,12 @@
             </form>
 
             <div class="dsp-item">
-                <template is="dom-if" if="{{!model.Entity$.IsValid$}}">
-                    <p>{{model.Entity$.InvalidReason$}}</p>
+                <template is="dom-if" if="{{!model.Entity.IsValid}}">
+                    <p>{{model.Entity.InvalidReason}}</p>
                 </template>
 
-                <button class="btn btn-success" value="{{model.Save$::click}}" on onmouseup="++this.value">Save</button>
-                <button class="btn btn-default" value="{{model.Close$::click}}" on onmouseup="++this.value">Close</button>
+                <button class="btn btn-success" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
+                <button class="btn btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
             </div>
 
             <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
@@ -164,7 +167,9 @@
             const script = document._currentScript || document.currentScript;
             const template = script.previousElementSibling;
 
-            template.setRadioValue = (event) => template.model.Entity$.AdType$ = event.target.value;
+            template.setRadioValue = (event) => template.model.Entity.AdType$ = event.target.value;
+
+            template.addCategory = () => template.model.AddElementTo$ = "Categories$";
         })();
     </script>
 </template>
