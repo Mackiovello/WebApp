@@ -143,12 +143,8 @@
         </form>
 
         <div class="dsp-item">
-            <template is="dom-if" if="{{!model.Entity.IsValid}}">
-                <p>{{model.Entity.InvalidReason}}</p>
-            </template>
-
-            <button class="btn btn-success" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
-            <button class="btn btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
+            <button class="btn btn-success" on-click="save">Save</button>
+            <button class="btn btn-default" on-click="cancel">Close</button>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
@@ -164,6 +160,15 @@
                 const inputElement = event.target.previousElementSibling;
                 template.model.AddElementTo$ = `Categories$,"${inputElement.value}"`;
                 inputElement.value = "";
+            }
+
+            template.save = function(event) {
+                template.model.Save$ += 1;
+            };
+
+            template.cancel = function() {
+                template.model.Cancel$ += 1;
+                template.model.RedirectUrl$ = template.model.ResourcePath;
             }
         })();
     </script>
