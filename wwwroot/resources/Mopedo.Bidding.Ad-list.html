@@ -31,7 +31,7 @@
                             <td>{{item.LandingPage$}}</td>
                             <td>
                                 <button value="{{item.AdId$}}" class="btn btn-sm btn-default" on-click="editAd">edit</button>
-                                <button class="btn btn-sm btn-default">delete</button>
+                                <button value="{{item.AdId$}}" class="btn btn-sm btn-default" on-click="deleteAd">delete</button>
                             </td>
                         </tr>
                     </template>
@@ -51,8 +51,13 @@
             const template = script.previousElementSibling;
 
             template.editAd = function(event) {
-                const id = event.target.value;
-                template.model.RedirectUrl$ = `${template.model.ResourcePath}/AdId=${id}`
+                const adId = event.target.value;
+                template.model.RedirectUrl$ = `${template.model.ResourcePath}/AdId=${adId}`
+            }
+
+            template.deleteAd = function(event) {
+                const adId = event.target.value;
+                template.model.Delete$ = `AdId=${adId}`;
             }
         })();
     </script>

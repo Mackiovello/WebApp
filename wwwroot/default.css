@@ -38,10 +38,29 @@ body {
     width: 45%;
 }
 
-.dsp-save-reaction-message {
-    margin-left: 10px;
+.dsp-main-menu {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
 
+.dsp-main-menu__navigation-item {
+    display: inline-block;
+    color: #333;
+    background-color: #fff;
+    font-family: var(--font-primary);
+    width: 300px;
+    height: 130px;
+    font-size: 3em;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 1px 3px #999;
+}
+
+.dsp-main-menu__navigation-item h2 {
+    font-size: 2rem;
+    margin: 0;
+}
 
 paper-radio-button::shadow #onRadio {
     background-color: #1A8EDB;
