@@ -33,9 +33,16 @@
             resize: vertical;
         }
 
+        .dsp-input-with-button {
+            display: flex;    
+        }
+
+        .dsp-input-with-button__input {
+            margin-right: 30px;
+        }
+
     </style>
-    <template is="dom-bind">
-                   
+    <template is="dom-bind">     
         <template is="dom-if" if="{{model.HasMessage}}">
             <paper-alert-dialog title="{{model.MessageType}}"
                                 confirm-button="OK"
@@ -43,124 +50,130 @@
                 {{model.Message}} (Error code {{model.ErrorCode}})
             </paper-alert-dialog>
         </template>
-            <h1 class="dsp-item__headline">Mopedo.Bidding.Ad</h1>
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Basic info</legend>
-                    <div class="dsp-item__row">
-                        <label>Ad Id
-                            <input class="form-control" type="text" value="{{model.Entity.AdId$::input}}">
-                            <small class="form-text text-muted">A unique id for the ad</small>
-                        </label>
-                        <label>Label
-                            <input class="form-control" type="text" value="{{model.Entity.Label$::input}}">
-                            <small class="form-text text-muted">A describing label for the ad</small>
-                        </label>
-                    </div>
-                </fieldset>
-            </form>
+        <h1 class="dsp-item__headline">Mopedo.Bidding.Ad</h1>
+        <ol class="breadcrumb dsp-item">
+            <li class="breadcrumb-item"><a href="/dsp">Home</a></li>
+            <li class="breadcrumb-item"><a href="../">Ad list</a></li>
+            <li class="breadcrumb-item active">New ad</li>
+        </ol>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Basic info</legend>
+                <div class="dsp-item__row">
+                    <label>Ad Id
+                        <input class="form-control" type="text" value="{{model.Entity.AdId$::input}}">
+                        <small class="form-text text-muted">A unique id for the ad</small>
+                    </label>
+                    <label>Label
+                        <input class="form-control" type="text" value="{{model.Entity.Label$::input}}">
+                        <small class="form-text text-muted">A describing label for the ad</small>
+                    </label>
+                </div>
+            </fieldset>
+        </form>
 
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Ad Type</legend>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
-                            banner
-                        </label>    
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
-                            video
-                        </label>
-                    </div>
-                        <div class="form-check disabled">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="adType" value="native" on-click="setRadioValue">
-                            native
-                        </label>
-                    </div>
-                </fieldset>
-            </form>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Ad Type</legend>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
+                        banner
+                    </label>    
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="adType" value="banner" on-click="setRadioValue">
+                        video
+                    </label>
+                </div>
+                    <div class="form-check disabled">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="adType" value="native" on-click="setRadioValue">
+                        native
+                    </label>
+                </div>
+            </fieldset>
+        </form>
 
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Dimensions</legend>
-                    <div class="form-group dsp-item__row">
-                        <label>Min width
-                            <input class="form-control" type="number" value="{{model.Entity.MinWidth$::input}}">
-                        </label>
-                        <label>Max width
-                            <input class="form-control" type="number" value="{{model.Entity.MaxWidth$::input}}">
-                        </label>
-                    </div>
-                    <div class="form-group dsp-item__row">
-                        <label>Min height
-                            <input class="form-control" type="number" value="{{model.Entity.MinHeight$::input}}">
-                        </label>
-                        <label>Max height
-                            <input class="form-control" type="number" value="{{model.Entity.MaxHeight$::input}}">
-                        </label>
-                    </div>
-                </fieldset>
-            </form>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Dimensions</legend>
+                <div class="form-group dsp-item__row">
+                    <label>Min width
+                        <input class="form-control" type="number" value="{{model.Entity.MinWidth$::input}}">
+                    </label>
+                    <label>Max width
+                        <input class="form-control" type="number" value="{{model.Entity.MaxWidth$::input}}">
+                    </label>
+                </div>
+                <div class="form-group dsp-item__row">
+                    <label>Min height
+                        <input class="form-control" type="number" value="{{model.Entity.MinHeight$::input}}">
+                    </label>
+                    <label>Max height
+                        <input class="form-control" type="number" value="{{model.Entity.MaxHeight$::input}}">
+                    </label>
+                </div>
+            </fieldset>
+        </form>
 
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Markup</legend>
-                    <textarea class="form-control dsp-markup-textarea" placeholder="Enter your markup here" value="{{model.Entity.AdMarkup$::input}}"></textarea>
-                </fieldset>
-            </form>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Markup</legend>
+                <textarea class="form-control dsp-markup-textarea" placeholder="Enter your markup here" value="{{model.Entity.AdMarkup$::input}}"></textarea>
+            </fieldset>
+        </form>
 
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Categories</legend>
-                    <template is="dom-repeat" items="{{model.Entity.Categories$}}">
-                        <div class="form-group">
-                            <label>Category {{index}}<input class="form-control" type="text" value="{{item::change}}"></label>
-                        </div>
-                    </template>
-                    <button class="btn btn-primary" on-click="addCategory">Add category</button>
-                </fieldset>
-            </form>
-
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Landing page</legend>
-                    <input class="form-control" type="text" value="{{model.Entity.LandingPage$::input}}">
-                    <small class="form-text text-muted">Landing page for the ad</small>
-                </fieldset>
-            </form>
-
-            <form class="dsp-item">
-                <fieldset>
-                    <legend>Tracking</legend>
-                    <div class="form-group">
-                        <label>
-                            <input class="form-check" type="checkbox" checked="{{model.Entity.AutoClickTrackingEnabled$::change}}">
-                            Enable auto click tracking
-                        </label>
-                    </div>                    
-                    <div class="form-group">
-                        <label>
-                            <input class="form-check" type="checkbox" checked="{{model.Entity.ImplementClickTrackingMacro}}" disabled>
-                            Implement click tracking macro
-                        </label>
-                    </div>
-                </fieldset>
-            </form>
-
-            <div class="dsp-item">
-                <template is="dom-if" if="{{!model.Entity.IsValid}}">
-                    <p>{{model.Entity.InvalidReason}}</p>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Categories</legend>
+                <template is="dom-repeat" items="{{model.Entity.Categories$}}">
+                    <h3>{{item}}</h3>
                 </template>
+                <div class="dsp-input-with-button">
+                    <input class="form-control dsp-input-with-button__input" type="text" value="">
+                    <button class="btn btn-primary" on-click="addCategory">Add category</button>
+                </div>
+            </fieldset>
+        </form>
 
-                <button class="btn btn-success" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
-                <button class="btn btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
-            </div>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Landing page</legend>
+                <input class="form-control" type="text" value="{{model.Entity.LandingPage$::input}}">
+                <small class="form-text text-muted">Landing page for the ad</small>
+            </fieldset>
+        </form>
 
-            <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Tracking</legend>
+                <div class="form-group">
+                    <label>
+                        <input class="form-check" type="checkbox" checked="{{model.Entity.AutoClickTrackingEnabled$::change}}">
+                        Enable auto click tracking
+                    </label>
+                </div>                    
+                <div class="form-group">
+                    <label>
+                        <input class="form-check" type="checkbox" checked="{{model.Entity.ImplementClickTrackingMacro}}" disabled>
+                        Implement click tracking macro
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="dsp-item">
+            <template is="dom-if" if="{{!model.Entity.IsValid}}">
+                <p>{{model.Entity.InvalidReason}}</p>
+            </template>
+
+            <button class="btn btn-success" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
+            <button class="btn btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
+        </div>
+
+        <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
     </template>
     <script>
         (function () {
@@ -169,7 +182,11 @@
 
             template.setRadioValue = (event) => template.model.Entity.AdType$ = event.target.value;
 
-            template.addCategory = () => template.model.AddElementTo$ = "Categories$";
+            template.addCategory = function(event) {
+                const inputElement = event.target.previousElementSibling;
+                template.model.AddElementTo$ = `Categories$,\\"${inputElement.value}\\"`;
+                inputElement.value = "";
+            }
         })();
     </script>
 </template>
