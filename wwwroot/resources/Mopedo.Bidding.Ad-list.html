@@ -30,7 +30,7 @@
                             <td>{{item.Label$}}</td>
                             <td>{{item.LandingPage$}}</td>
                             <td>
-                                <button class="btn btn-sm btn-default">edit</button>
+                                <button value="{{item.AdId$}}" class="btn btn-sm btn-default" on-click="editAd">edit</button>
                                 <button class="btn btn-sm btn-default">delete</button>
                             </td>
                         </tr>
@@ -49,6 +49,11 @@
         (function () {
             const script = document._currentScript || document.currentScript;
             const template = script.previousElementSibling;
+
+            template.editAd = function(event) {
+                const id = event.target.value;
+                template.model.RedirectUrl$ = `${template.model.ResourcePath}/AdId=${id}`
+            }
         })();
     </script>
 </template>
