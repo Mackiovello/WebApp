@@ -128,9 +128,11 @@
         <form class="dsp-item">
             <fieldset>
                 <legend>Categories</legend>
-                <template is="dom-repeat" items="{{model.Entity.Categories$}}">
-                    <h3>{{item}}</h3>
-                </template>
+                <ul>
+                    <template is="dom-repeat" items="{{model.Entity.Categories$}}">
+                        <li>{{item}}</li>
+                    </template>
+                </ul>
                 <div class="dsp-input-with-button">
                     <input class="form-control dsp-input-with-button__input" type="text" value="">
                     <button class="btn btn-primary" on-click="addCategory">Add category</button>
@@ -184,7 +186,7 @@
 
             template.addCategory = function(event) {
                 const inputElement = event.target.previousElementSibling;
-                template.model.AddElementTo$ = `Categories$,\\"${inputElement.value}\\"`;
+                template.model.AddElementTo$ = `Categories$,"${inputElement.value}"`;
                 inputElement.value = "";
             }
         })();
