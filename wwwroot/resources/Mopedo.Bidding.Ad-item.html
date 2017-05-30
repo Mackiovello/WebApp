@@ -4,30 +4,6 @@
 
 <template>
     <style>
-        .dsp-item {
-            max-width: 600px;
-            margin: 0 auto 20px auto;
-            box-shadow: 0 2px 5px #999;
-            padding: 20px;
-            background-color: white;
-        }
-
-        .dsp-item__headline {
-            font-size: 3em;
-            text-align: center;
-            color: #333;
-            margin: 0 0 32px 0;
-        }
-
-        .dsp-item__row {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .dsp-item__row label {
-            width: 45%;
-        }
-
         .dsp-markup-textarea {
             width: 100%;
             resize: vertical;
@@ -50,7 +26,7 @@
                 {{model.Message}} (Error code {{model.ErrorCode}})
             </paper-alert-dialog>
         </template>
-        <h1 class="dsp-item__headline">Mopedo.Bidding.Ad</h1>
+        <h1 class="dsp-headline">Mopedo.Bidding.Ad</h1>
         <ol class="breadcrumb dsp-item">
             <li class="breadcrumb-item"><a href="/dsp">Home</a></li>
             <li class="breadcrumb-item"><a href="../">Ad list</a></li>
