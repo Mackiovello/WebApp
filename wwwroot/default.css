@@ -12,14 +12,8 @@ body {
     box-shadow: 0 1px 3px #999;
     padding: 20px;
     background-color: white;
-}
-
-.dsp-item {
-    max-width: 600px;
-}
-
-.dsp-list {
     max-width: 800px;
+    font-family: var(--font-primary);
 }
 
 .dsp-headline {
@@ -64,4 +58,10 @@ body {
 
 .dsp-discrete-error-message {
     margin-left: 10px;
+}
+
+.dsp-form-text-block {
+    margin: 5px 0 0 0;
+    font-size: 1.2em;
+    font-family: var(--font-primary);
 }

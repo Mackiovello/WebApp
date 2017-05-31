@@ -2,7 +2,99 @@
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
 
 <template>
-    <template id="main" is="dom-bind">
+    <style>
+        .dsp-item__form {
+            display: flex; 
+            flex-direction: column; 
+        }
+    </style>
+    <template is="dom-bind">
+        <template is="dom-if" if="{{model.HasMessage}}">
+            <div class="alert alert-danger alert-dismissable">
+                <span class="close" aria-label="close" on-click="close">&times;</span>
+                <strong>{{model.MessageType}}</strong> {{model.Message}} (Error code {{model.ErrorCode}})
+            </div>
+        </template>
+
+        <h1 class="dsp-headline">Mopedo.Bidding.Campaign</h1>
+        <ol class="breadcrumb dsp-item">
+            <li class="breadcrumb-item"><a href="/dsp">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{model.ResourcePath}}">Campaign list</a></li>
+            <li class="breadcrumb-item active">Campaign</li>
+        </ol>
+
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Basic info</legend>
+                <div class="dsp-item__row">
+                    <label>Id
+                        <input class="form-control" type="text" value="{{model.Entity.Id$::input}}">
+                        <small class="form-text text-muted">A unique id for the campaign</small>
+                    </label>
+                    <label>Label
+                        <input class="form-control" type="text" value="{{model.Entity.Label$::input}}">
+                        <small class="form-text text-muted">A describing label for the campaign</small>
+                    </label>
+                </div>
+                <div class="dsp-item__row">
+                    <label>Priority
+                        <input class="form-control" type="number" value="{{model.Entity.Priority$::input}}">
+                        <small class="form-text text-muted">A campaign with a higher number will be evaluated first</small>
+                    </label>
+                    <label>Paused
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Paused$::change}}">
+                        <small class="form-text text-muted">Paused campaigns are skipped during bid request evaluation</small>
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Dates</legend>
+                <div class="dsp-item__row">
+                    <label>Start date
+                        <input class="form-control" type="date" value="{{model.Entity.StartDateTime$::input}}">
+                        <small class="form-text text-muted">The point in time when the campaign begins</small>
+                    </label>
+                    <label>End Date
+                        <input class="form-control" type="date" value="{{model.Entity.EndDateTime$::input}}">
+                        <small class="form-text text-muted">The point in time when the campaign ends</small>
+                    </label>
+                </div>
+                <p class="dsp-form-text-block">
+                    Remaining days: {{model.Entity.DaysRemaining}}
+                </p>
+            </fieldset>
+        </form>
+
+        <div class="dsp-item">
+            <button class="btn btn-sm btn-primary" value="{{model.Save$::click}}" on onmouseup="++this.value">Save</button>
+            <button class="btn btn-sm btn-default" value="{{model.Close$::click}}" on onmouseup="++this.value">Close</button>
+        </div>
+
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
     </template>
+    <script>
+        (function () {
+            const script = document._currentScript || document.currentScript;
+            const template = script.previousElementSibling;
+
+            template.getInputType = function (type) {
+                if (type === "boolean") {
+                    return "checkbox";
+                } else if (type === "array" || type === "object" || type === "string") {
+                    return "text"
+                } else if (type === "number") {
+                    return "number"
+                }       
+            }
+
+            template.isCheckbox = function (type) {
+                return type === "boolean";
+            }
+
+            template.close = (event) => event.target.parentElement.style.display = "none";
+        })();
+    </script>
 </template>
