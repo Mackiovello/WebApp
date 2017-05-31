@@ -62,9 +62,6 @@ body {
     margin: 0;
 }
 
-paper-radio-button::shadow #onRadio {
-    background-color: #1A8EDB;
-}
-paper-radio-button[checked]::shadow #offRadio {
-    border-color: #1A8EDB;
+.dsp-discrete-error-message {
+    margin-left: 10px;
 }

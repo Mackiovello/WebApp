@@ -1,18 +1,17 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
-<link rel="import" href="/sys/paper-alert-dialog/paper-alert-dialog.html" />
 
 <template>
     <template is="dom-bind">
+        <template is="dom-if" if="{{model.HasMessage}}">
+            <div class="alert alert-danger alert-dismissable">
+                <span class="close" aria-label="close" on-click="close">&times;</span>
+                <strong>{{model.MessageType}}</strong> {{model.Message}} (Error code {{model.ErrorCode}})
+            </div>
+        </template>
+
         <h3 class="dsp-headline">Mopedo.Bidding.Ads</h3>
         <div class="dsp-list">
-            <template is="dom-if" if="{{model.HasMessage}}">
-                <paper-alert-dialog title="{{model.MessageType}}"
-                                    confirm-button="OK"
-                                    opened="true">
-                    {{model.Message}} (Error code {{model.ErrorCode}})
-                </paper-alert-dialog>
-            </template>
 
             <table class="table">
                 <thead>
@@ -41,6 +40,9 @@
             <template is="dom-if" if="{{model.CanInsert}}">
                 <button class="btn btn-primary" value="{{model.Add$::click}}" onclick="++this.value">Add</button>
             </template>
+            <template is="dom-if" if="{{!model.CanInsert}}">
+                <button class="btn btn-primary disabled">Add</button>
+            </template>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
@@ -59,6 +61,8 @@
                 const adId = event.target.value;
                 template.model.Delete$ = `AdId=${adId}`;
             }
+
+            template.close = (event) => event.target.parentElement.style.display = "none";
         })();
     </script>
 </template>

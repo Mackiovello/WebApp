@@ -1,6 +1,5 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
-<link rel="import" href="/sys/paper-alert-dialog/paper-alert-dialog.html"/>
 
 <template>
     <style>
@@ -19,13 +18,6 @@
 
     </style>
     <template is="dom-bind">     
-        <template is="dom-if" if="{{model.HasMessage}}">
-            <paper-alert-dialog title="{{model.MessageType}}"
-                                confirm-button="OK"
-                                opened="true">
-                {{model.Message}} (Error code {{model.ErrorCode}})
-            </paper-alert-dialog>
-        </template>
         <h1 class="dsp-headline">Mopedo.Bidding.Ad</h1>
         <ol class="breadcrumb dsp-item">
             <li class="breadcrumb-item"><a href="/dsp">Home</a></li>
@@ -145,6 +137,9 @@
         <div class="dsp-item">
             <button class="btn btn-success" on-click="save">Save</button>
             <button class="btn btn-default" on-click="cancel">Close</button>
+            <template is="dom-if" if="{{model.HasMessage}}">
+                <span class="dsp-discrete-error-message"><strong>{{model.MessageType}}</strong> {{model.Message}} (Error code {{model.ErrorCode}})</span>
+            </template>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
