@@ -46,6 +46,15 @@
                         <small class="form-text text-muted">Paused campaigns are skipped during bid request evaluation</small>
                     </label>
                 </div>
+                <template is="dom-if" if="{{model.Entity.IsActive}}">
+                    <p class="dsp-form-text-block">This campaign is active</p>
+                </template>
+                <template is="dom-if" if="{{model.Entity.IsUpcoming}}">
+                    <p class="dsp-form-text-block">This campaign is upcoming</p>
+                </template>
+                <template is="dom-if" if="{{model.Entity.IsCompleted}}">
+                    <p class="dsp-form-text-block">This campaign is completed</p>
+                </template>
             </fieldset>
         </form>
 
@@ -68,9 +77,154 @@
             </fieldset>
         </form>
 
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Domain and image</legend>
+                <div class="form-group">
+                    <label>Advertiser domain</label>
+                    <input class="form-control" type="text" value="{{model.Entity.AdvertiserDomain$::input}}">
+                    <small class="form-text text-muted">The point in time when the campaign ends</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Sample image</label>
+                    <input class="form-control" type="text" value="{{model.Entity.SampleImageUrl$::input}}">
+                    <small class="form-text text-muted">A URL to an image, representative of the campaign</small>
+                </div>
+            </fieldset>
+        </form>
+
+        <form class="dsp-item">
+            <fieldset>
+                <legend>Daily budget <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input class="form-control" type="number" value="{{model.Entity.Budget$.DailyBudget.Amount$::input}}">
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <input class="form-control" type="text" value="{{model.Entity.Budget$.DailyBudget.Currency$::input}}">
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Budget$.DailyBudget.CPM$::change}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Total budget <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input class="form-control" type="number" value="{{model.Entity.Budget$.TotalBudget.Amount$::input}}">
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <input class="form-control" type="text" value="{{model.Entity.Budget$.TotalBudget.Currency$::input}}">
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Budget$.TotalBudget.CPM$::change}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Daily spent <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.DailySpent.Amount$}}</p>
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.DailySpent.Currency$}}</p>
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" disabled checked="{{model.Entity.Budget$.DailySpent.CPM$}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Total spent <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.TotalSpent.Amount$}}</p>
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.TotalSpent.Currency$}}</p>
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Budget$.TotalSpent.CPM$::change}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Daily remaining <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.DailyRemaining.Amount$}}</p>
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.DailyRemaining.Currency$}}</p>
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Budget$.DailyRemaining.CPM$::change}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Total remaining <i on-click="toggleBudget" class="glyphicon glyphicon-menu-down dsp-budget-open"></i></legend>
+                <div class="dsp-budget-row">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.TotalRemaining.Amount$}}</p>
+                        <small class="form-text text-muted">The amount of currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <p class="dsp-budget-row__text">{{model.Entity.Budget$.TotalRemaining.Currency$}}</p>
+                        <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                    </div>
+                    <div class="form-group">
+                        <label>CPM</label>
+                        <input class="form-control" type="checkbox" checked="{{model.Entity.Budget$.TotalRemaining.CPM$::change}}">
+                        <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
         <div class="dsp-item">
-            <button class="btn btn-sm btn-primary" value="{{model.Save$::click}}" on onmouseup="++this.value">Save</button>
-            <button class="btn btn-sm btn-default" value="{{model.Close$::click}}" on onmouseup="++this.value">Close</button>
+            <button class="btn btn-sm btn-primary" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
+            <button class="btn btn-sm btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
@@ -80,21 +234,23 @@
             const script = document._currentScript || document.currentScript;
             const template = script.previousElementSibling;
 
-            template.getInputType = function (type) {
-                if (type === "boolean") {
-                    return "checkbox";
-                } else if (type === "array" || type === "object" || type === "string") {
-                    return "text"
-                } else if (type === "number") {
-                    return "number"
-                }       
-            }
-
-            template.isCheckbox = function (type) {
-                return type === "boolean";
-            }
-
             template.close = (event) => event.target.parentElement.style.display = "none";
+
+            template.toggleBudget = function(event) {
+                const budgetItem = event.target.parentElement.nextElementSibling;
+                const upIcon = "glyphicon-menu-up";
+                const downIcon = "glyphicon-menu-down";
+                let targetClasses = event.target.classList;
+                if (targetClasses.contains(downIcon)) {
+                    targetClasses.remove(downIcon);
+                    targetClasses.add(upIcon);
+                    budgetItem.style.display = "flex";
+                } else {
+                    targetClasses.add(downIcon);
+                    targetClasses.remove(upIcon);
+                    budgetItem.style.display = "none";
+                }
+            }
         })();
     </script>
 </template>
