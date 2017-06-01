@@ -222,6 +222,77 @@
             </fieldset>
         </form>
 
+        <form class="dsp-item">
+            <fieldset>
+                <legend class="dsp-legend-with-button">Bid rules <i on-click="addBidRule" class="glyphicon glyphicon-plus dsp-budget-add"></i></legend>
+            </fieldset>
+            <p class$="{{hasNoBidRules(model.Entity.BidRules$)}}">There are currently no bid rules, add one by clicking the plus sign</p>
+
+            <template is="dom-repeat" items="{{model.Entity.BidRules$}}" as="bidRule" index-as="bidRuleIndex">
+                <div class="dsp-bid-rule-box">
+                    <fieldset>
+                        <legend>Bid rule</legend>
+                        <div class="dsp-bid-rule-header">
+                            <h5>Conditions</h5>
+                            <i on-click="addCondition" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
+                        </div>
+
+                        <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition">
+                            <div class="dsp-condition-row">
+                                <div class="form-group">
+                                    
+                                    <label>Key</label>
+                                    <input class="form-control" type="text" value="{{condition.Key$::input}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Operator</label>
+                                    <input class="form-control" type="text" value="{{condition.Operator$::input}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Value</label>
+                                    <input class="form-control" type="text" value="{{condition.Value$::input}}">
+                                </div>
+                            </div>
+                        </template>
+
+                        <div class="dsp-bid-rule-header">
+                            <h5>Templates</h5>
+                            <i on-click="addTemplate" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
+                        </div>
+                        <template is="dom-repeat" items="{{bidRule.BidTemplates$}}" as="template" index-as="templateIndex">
+                            <div class="dsp-condition-row">
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input class="form-control" type="number" value="{{template.Amount$::input}}">
+                                    <small class="form-text text-muted">The amount of currency</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Currency</label>
+                                    <input class="form-control" type="text" value="{{template.Currency$::input}}">
+                                    <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>CPM</label>
+                                    <input class="form-control" type="checkbox" checked="{{template.CPM$::change}}">
+                                    <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                                </div>
+                            </div>
+                            <h6>Ad Ids</h6>
+                            <ul>
+                                <template is="dom-repeat" items="{{template.AdIds$}}" as="id">
+                                    <li>{{id}}</li>
+                                </template>
+                            </ul>
+                            <div class="dsp-input-with-button">
+                                <input class="form-control dsp-input-with-button__input" type="text" value="">
+                                <button class="btn btn-primary" value="{{bidRuleIndex}},{{templateIndex}}" on-click="addAdId">Add Ad</button>
+                            </div>
+                        </template>
+                    </fieldset>
+                </div>
+            </template>
+        </form>
+
         <div class="dsp-item">
             <button class="btn btn-sm btn-primary" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
             <button class="btn btn-sm btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
@@ -250,6 +321,35 @@
                     targetClasses.remove(upIcon);
                     budgetItem.style.display = "none";
                 }
+            }
+
+            template.hasNoBidRules = (bidRules) =>  bidRules.length === 0 ? "" : "dsp-hide-item";
+
+            template.addBidRule = function(event) { 
+                template.model.AddElementTo$ = "BidRules$";
+                const noBidRulesMessage = event.target.parentElement.parentElement.nextElementSibling;
+                if (!noBidRulesMessage.classList.contains("dsp-hide-item")) {
+                    noBidRulesMessage.classList.add("dsp-hide-item");
+                }
+            }
+
+            template.addCondition = function(event) {
+                const index = event.target.value;
+                template.model.AddElementTo$ = `BidRules$.${index}.Conditions$`;  
+            } 
+
+            template.addTemplate = function(event) {
+                const index = event.target.value;
+                template.model.AddElementTo$ = `BidRules$.${index}.BidTemplates$`;    
+            } 
+
+            template.addAdId = function(event) {
+                const value = event.target.value;
+                const inputElement = event.target.previousElementSibling;
+                const bidIndex = value.split(",")[0];
+                const templateIndex = value.split(",")[1];
+                template.model.AddElementTo$ = `BidRules$.${bidIndex}.BidTemplates$.${templateIndex}.AdIds$,"${inputElement.value}"`;
+                inputElement.value = "";
             }
         })();
     </script>
