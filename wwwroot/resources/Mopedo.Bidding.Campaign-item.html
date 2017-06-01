@@ -229,66 +229,79 @@
             <p class$="{{hasNoBidRules(model.Entity.BidRules$)}}">There are currently no bid rules, add one by clicking the plus sign</p>
 
             <template is="dom-repeat" items="{{model.Entity.BidRules$}}" as="bidRule" index-as="bidRuleIndex">
-                <div class="dsp-bid-rule-box">
-                    <fieldset>
-                        <legend>Bid rule</legend>
-                        <div class="dsp-bid-rule-header">
-                            <h5>Conditions</h5>
-                            <i on-click="addCondition" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
-                        </div>
-
-                        <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition">
-                            <div class="dsp-condition-row">
-                                <div class="form-group">
-                                    
-                                    <label>Key</label>
-                                    <input class="form-control" type="text" value="{{condition.Key$::input}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Operator</label>
-                                    <input class="form-control" type="text" value="{{condition.Operator$::input}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Value</label>
-                                    <input class="form-control" type="text" value="{{condition.Value$::input}}">
-                                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bid rule</div>
+                    <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="dsp-bid-rule-header panel-heading">
+                                Conditions
+                                <i on-click="addCondition" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
                             </div>
-                        </template>
 
-                        <div class="dsp-bid-rule-header">
-                            <h5>Templates</h5>
-                            <i on-click="addTemplate" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
-                        </div>
-                        <template is="dom-repeat" items="{{bidRule.BidTemplates$}}" as="template" index-as="templateIndex">
-                            <div class="dsp-condition-row">
-                                <div class="form-group">
-                                    <label>Amount</label>
-                                    <input class="form-control" type="number" value="{{template.Amount$::input}}">
-                                    <small class="form-text text-muted">The amount of currency</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Currency</label>
-                                    <input class="form-control" type="text" value="{{template.Currency$::input}}">
-                                    <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>CPM</label>
-                                    <input class="form-control" type="checkbox" checked="{{template.CPM$::change}}">
-                                    <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
-                                </div>
-                            </div>
-                            <h6>Ad Ids</h6>
-                            <ul>
-                                <template is="dom-repeat" items="{{template.AdIds$}}" as="id">
-                                    <li>{{id}}</li>
+                            <div class="panel-body">
+                                <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition">
+                                    <div class="dsp-condition-row">
+                                        <div class="form-group">
+                                            
+                                            <label>Key</label>
+                                            <input class="form-control" type="text" value="{{condition.Key$::input}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Operator</label>
+                                            <input class="form-control" type="text" value="{{condition.Operator$::input}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Value</label>
+                                            <input class="form-control" type="text" value="{{condition.Value$::input}}">
+                                        </div>
+                                    </div>
                                 </template>
-                            </ul>
-                            <div class="dsp-input-with-button">
-                                <input class="form-control dsp-input-with-button__input" type="text" value="">
-                                <button class="btn btn-primary" value="{{bidRuleIndex}},{{templateIndex}}" on-click="addAdId">Add Ad</button>
                             </div>
-                        </template>
-                    </fieldset>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="dsp-bid-rule-header panel-heading">
+                                Templates
+                                <i on-click="addTemplate" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
+                            </div>
+                            <div class="panel-body">
+                                <template is="dom-repeat" items="{{bidRule.BidTemplates$}}" as="template" index-as="templateIndex">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Template</div>
+                                        <div class="panel-body">
+                                            <div class="dsp-condition-row">
+                                                <div class="form-group">
+                                                    <label>Amount</label>
+                                                    <input class="form-control" type="number" value="{{template.Amount$::input}}">
+                                                    <small class="form-text text-muted">The amount of currency</small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Currency</label>
+                                                    <input class="form-control" type="text" value="{{template.Currency$::input}}">
+                                                    <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>CPM</label>
+                                                    <input class="form-control" type="checkbox" checked="{{template.CPM$::change}}">
+                                                    <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
+                                                </div>
+                                            </div>
+                                            <h6>Ad Ids</h6>
+                                            <ul>
+                                                <template is="dom-repeat" items="{{template.AdIds$}}" as="id">
+                                                    <li>{{id}}</li>
+                                                </template>
+                                            </ul>
+                                            <div class="dsp-input-with-button">
+                                                <input class="form-control dsp-input-with-button__input" type="text" value="">
+                                                <button class="btn btn-primary" value="{{bidRuleIndex}},{{templateIndex}}" on-click="addAdId">New Ad</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </template>
         </form>
