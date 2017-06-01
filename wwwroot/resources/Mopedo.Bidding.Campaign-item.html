@@ -262,7 +262,10 @@
                         <div class="panel panel-default">
                             <div class="dsp-bid-rule-header panel-heading">
                                 Templates
-                                <i on-click="addTemplate" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
+                                <div>
+                                    <i on-click="addTemplate" value="{{bidRuleIndex}}" class="glyphicon glyphicon-plus dsp-budget-add"></i>
+                                    <i on-click="toggleTemplates" class="glyphicon glyphicon-menu-down dsp-budget-add"></i>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <template is="dom-repeat" items="{{bidRule.BidTemplates$}}" as="template" index-as="templateIndex">
@@ -317,13 +320,28 @@
         (function () {
             const script = document._currentScript || document.currentScript;
             const template = script.previousElementSibling;
+            const upIcon = "glyphicon-menu-up";
+            const downIcon = "glyphicon-menu-down";
 
             template.close = (event) => event.target.parentElement.style.display = "none";
 
+            template.toggleTemplates = function(event) {
+                const templates = event.target.parentElement.parentElement.nextElementSibling;
+                let targetClasses = event.target.classList;
+                console.log(targetClasses.contains(downIcon));
+                if (targetClasses.contains(downIcon)) {
+                    targetClasses.remove(downIcon);
+                    targetClasses.add(upIcon);
+                    templates.style.display = "none";
+                } else {
+                    targetClasses.add(downIcon);
+                    targetClasses.remove(upIcon);
+                    templates.style.display = "block";
+                }
+            }
+
             template.toggleBudget = function(event) {
                 const budgetItem = event.target.parentElement.nextElementSibling;
-                const upIcon = "glyphicon-menu-up";
-                const downIcon = "glyphicon-menu-down";
                 let targetClasses = event.target.classList;
                 if (targetClasses.contains(downIcon)) {
                     targetClasses.remove(downIcon);
