@@ -3,10 +3,7 @@
 
 <template>
     <style>
-        .dsp-item__form {
-            display: flex; 
-            flex-direction: column; 
-        }
+
     </style>
     <template is="dom-bind">
         <template is="dom-if" if="{{model.HasMessage}}">
@@ -248,7 +245,7 @@
                                 </div>
 
                                 <div class="panel-body">
-                                    <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition">
+                                    <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition" index-as="conditionIndex">
                                         <div class="dsp-condition-row">
                                             <div class="form-group">
                                                 <label>Key</label>
@@ -260,7 +257,16 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Value</label>
-                                                <input class="form-control" type="text" value="{{condition.Value$::input}}">
+                                                <input class="form-control" type="text" on-change="setConditionValueFromInput" index="{{bidRuleIndex}}.{{conditionIndex}}" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Value type</label>
+                                                <select class="form-control" on-change="setConditionValueFromDropDown">
+                                                    <option value="number">number</option>
+                                                    <option value="bool">true/false</option>
+                                                    <option value="date">date</option>
+                                                    <option value="string">text</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </template>
@@ -283,7 +289,7 @@
                                                 <div class="dsp-condition-row">
                                                     <div class="form-group">
                                                         <label>Amount</label>
-                                                        <input class="form-control" type="number" value="{{template.Amount$::input}}">
+                                                        <input class="form-control" type="number" value="{{template.Amount$::input">
                                                         <small class="form-text text-muted">The amount of currency</small>
                                                     </div>
                                                     <div class="form-group">
@@ -391,6 +397,34 @@
                 template.model.AddElementTo$ = `BidRules$.${bidIndex}.BidTemplates$.${templateIndex}.AdIds$,"${inputElement.value}"`;
                 inputElement.value = "";
             }
+
+            template.setConditionValueFromInput = function(event) {
+                const index = event.target.index;
+                const dropDown = event.target.parentElement.nextElementSibling.children[1];
+                const valueType = dropDown.options[dropDown.selectedIndex].value;
+                const value = event.target.value;
+                
+                setConditionValueAtIndex(index, value, valueType);
+            }
+
+            template.setConditionValueFromDropDown = function(event) {
+                const inputElement = event.target.parentElement.previousElementSibling.children[1];
+                const inputValue = inputElement.value;
+                const index = inputElement.index;
+                const valueType = event.target.options[event.target.selectedIndex].value;
+
+                setConditionValueAtIndex(index, inputValue, valueType);
+            }
+            
+            setConditionValueAtIndex = function(index, value, valueType) {
+                if (valueType == "string" || valueType == "date") {
+                    value = `'${value}'`;
+                }
+
+                const bidRuleIndex = index.split(".")[0];
+                const conditionIndex = index.split(".")[1];
+                template.model.Entity.BidRules$[bidRuleIndex].Conditions$[conditionIndex].Value$ = `@RESTar(${value})`;
+            } 
         })();
     </script>
 </template>

@@ -16,6 +16,11 @@ body {
     font-family: var(--font-primary);
 }
 
+.dsp-item__form {
+    display: flex; 
+    flex-direction: column; 
+}
+
 .dsp-headline {
     font-size: 3em;
     text-align: center;
