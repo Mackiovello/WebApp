@@ -123,3 +123,11 @@ body {
 .dsp-input-with-button__input {
     margin-right: 30px;
 }
+
+.glyphicon-menu-down {
+    transition: transform .3s ease-in-out;
+}
+
+.glyphicon-menu-down--rotate {
+    transform: rotate(180deg);
+} 
