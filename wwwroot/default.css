@@ -81,8 +81,8 @@ body {
     justify-content: space-between;
 }
 
-.dsp-condition-row .form-group {
-    width: 30%;
+.dsp-condition-row__value-type {
+    width: 100px;
 }
 
 .dsp-budget-open,
@@ -136,3 +136,4 @@ body {
 .glyphicon-menu-down--rotate {
     transform: rotate(180deg);
 } 
+

@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <label>Advertiser domain</label>
                     <input class="form-control" type="text" value="{{model.Entity.AdvertiserDomain$::input}}">
-                    <small class="form-text text-muted">The point in time when the campaign ends</small>
+                    <small class="form-text text-muted">The domain of the advertiser</small>
                 </div>
 
                 <div class="form-group">
@@ -253,13 +253,22 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Operator</label>
-                                                <input class="form-control" type="text" value="{{condition.Operator$::input}}">
+                                                <select class="form-control" value="{{condition.Operator$::change}}">
+                                                    <option value="EQUALS">EQUALS</option>
+                                                    <option value="NOT EQUALS">NOT EQUALS</option>
+                                                    <option value="CONTAINS">CONTAINS</option>
+                                                    <option value="NOT CONTAINS">NOT CONTAINS</option>
+                                                    <option value="GREATER THAN">GREATER THAN</option>
+                                                    <option value="LESS THAN">LESS THAN</option>
+                                                    <option value="GREATER THAN OR EQUALS">GREATER THAN OR EQUALS</option>
+                                                    <option value="LESS THAN OR EQUALS">LESS THAN OR EQUALS</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label>Value</label>
                                                 <input class="form-control" type="text" on-change="setConditionValueFromInput" index="{{bidRuleIndex}}.{{conditionIndex}}" value="">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group dsp-condition-row__value-type">
                                                 <label>Value type</label>
                                                 <select class="form-control" on-change="setConditionValueFromDropDown">
                                                     <option value="number">number</option>
@@ -289,17 +298,17 @@
                                                 <div class="dsp-condition-row">
                                                     <div class="form-group">
                                                         <label>Amount</label>
-                                                        <input class="form-control" type="number" value="{{template.Amount$::input">
+                                                        <input class="form-control" type="number" value="{{template.Price$.Amount$::input}}">
                                                         <small class="form-text text-muted">The amount of currency</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Currency</label>
-                                                        <input class="form-control" type="text" value="{{template.Currency$::input}}">
+                                                        <input class="form-control" type="text" value="{{template.Price$.Currency$::input}}">
                                                         <small class="form-text text-muted">An ISO 4217 code representing the currency</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>CPM</label>
-                                                        <input class="form-control" type="checkbox" checked="{{template.CPM$::change}}">
+                                                        <input class="form-control" type="checkbox" checked="{{template.Price$.CPM$::change}}">
                                                         <small class="form-text text-muted">Whether this price is encoded in CPM or not</small>
                                                     </div>
                                                 </div>
