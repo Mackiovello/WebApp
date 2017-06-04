@@ -2,21 +2,6 @@
 <link rel="import" href="/sys/puppet-redirect/puppet-redirect.html"/>
 
 <template>
-    <style>
-        .dsp-markup-textarea {
-            width: 100%;
-            resize: vertical;
-        }
-
-        .dsp-input-with-button {
-            display: flex;    
-        }
-
-        .dsp-input-with-button__input {
-            margin-right: 30px;
-        }
-
-    </style>
     <template is="dom-bind">     
         <h1 class="dsp-headline">Mopedo.Bidding.Ad</h1>
         <ol class="breadcrumb dsp-item">
@@ -55,7 +40,7 @@
                         video
                     </label>
                 </div>
-                    <div class="form-check disabled">
+                <div class="form-check">
                     <label class="form-check-label">
                         <input type="radio" class="form-check-input" name="adType" value="native" on-click="setRadioValue">
                         native
