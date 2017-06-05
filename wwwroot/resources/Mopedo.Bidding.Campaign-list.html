@@ -57,13 +57,13 @@
             const template = script.previousElementSibling;
 
             template.editCampaign = function(event) {
-                const adId = event.target.value;
-                template.model.RedirectUrl$ = `${template.model.ResourcePath}/Id=${adId}`
+                const campaignId = event.target.value;
+                template.model.RedirectUrl$ = `${template.model.ResourcePath}/Id=${campaignId}`
             }
 
             template.deleteCampaign = function(event) {
-                const adId = event.target.value;
-                template.model.Delete$ = `Id=${adId}`;
+                const campaignId = event.target.value;
+                template.model.Delete$ = `Id=${campaignId}`;
             }
 
             template.close = (event) => event.target.parentElement.style.display = "none";

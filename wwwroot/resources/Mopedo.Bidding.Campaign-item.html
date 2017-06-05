@@ -334,8 +334,53 @@
         </form>
 
         <div class="dsp-item">
-            <button class="btn btn-sm btn-primary" value="{{model.Save$::click}}" onclick="++this.value">Save</button>
-            <button class="btn btn-sm btn-default" value="{{model.Close$::click}}" onclick="++this.value">Close</button>
+             <fieldset>
+                 <legend>Statistics <i on-click="toggleStatistics" class="glyphicon glyphicon-menu-down dsp-budget-add"></i></legend>
+                 <div>
+                    <div class="dsp-statistics-container">
+                        <label class="dsp-statistics-simple-entry">Clicks
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.NrOfClicks}}</p>
+                        </label>
+                        <label class="dsp-statistics-simple-entry">Wins
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.NrOfWins}}</p>
+                        </label>
+                        <label class="dsp-statistics-simple-entry">Bids
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.NrOfBids}}</p>
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="dsp-statistics-container">
+                        <label class="dsp-statistics-simple-entry">Click rate
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.ClickRate}}%</p>
+                        </label>
+                        <label class="dsp-statistics-simple-entry">Win rate
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.WinRate}}%</p>
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="dsp-statistics-container">
+                        <label class="dsp-statistics-simple-entry">Average win price
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.AverageWinPrice.Amount$}} {{model.Entity.AverageWinPrice.Currency$}}</p>
+                            <span>CPM: {{model.Entity.AverageWinPrice.CPM$}}</span>
+                        </label>
+                        <label class="dsp-statistics-simple-entry">Average bid price
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.AverageBidPrice.Amount$}} {{model.Entity.AverageBidPrice.Currency$}}</p>
+                            <span>CPM: {{model.Entity.AverageBidPrice.CPM$}}</span>
+                        </label>
+                    </div>
+                    <hr>
+                    <div class="dsp-statistics-container">
+                        <label class="dsp-statistics-simple-entry">Latest win at
+                            <p class="dsp-statistics-simple-entry__number">{{model.Entity.LatestWinAt}}</p>
+                        </label>
+                    </div>
+                 </div>
+             </fieldset>
+        </div>
+
+        <div class="dsp-item">
+            <button class="btn btn-sm btn-primary" on-click="save">Save</button>
+            <button class="btn btn-sm btn-default" on-click="cancel">Close</button>
         </div>
 
         <link is="puppet-redirect" history url$="{{model.RedirectUrl$}}"/>
@@ -347,12 +392,26 @@
 
             template.close = (event) => event.target.parentElement.style.display = "none";
 
+            template.save = function(event) {
+                template.model.Save$ += 1;
+            };
+
+            template.cancel = function() {
+                template.model.Cancel$ += 1;
+                template.model.RedirectUrl$ = template.model.ResourcePath;
+            }
+
             template.toggleBidRule = function(event) {
                 const bidRule = event.target.parentElement.parentElement.parentElement.nextElementSibling.nextElementSibling;
                 const targetClasses = event.target.classList;
                 if (bidRule.children.length > 1) {
                     toggleItem(bidRule, targetClasses, "block", true);
                 }
+            }
+
+            template.toggleStatistics = function(event) {
+                const statistics = event.target.parentNode.nextElementSibling;
+                toggleItem(statistics, event.target.classList, "block", true);
             }
 
             template.toggleBidRuleProperties = function(event) {
