@@ -245,40 +245,44 @@
                                 </div>
 
                                 <div class="panel-body">
-                                    <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition" index-as="conditionIndex">
-                                        <div class="dsp-condition-row">
-                                            <div class="form-group">
-                                                <label>Key</label>
-                                                <input class="form-control" type="text" value="{{condition.Key$::input}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Operator</label>
-                                                <select class="form-control" value="{{condition.Operator$::change}}">
-                                                    <option value="EQUALS">EQUALS</option>
-                                                    <option value="NOT EQUALS">NOT EQUALS</option>
-                                                    <option value="CONTAINS">CONTAINS</option>
-                                                    <option value="NOT CONTAINS">NOT CONTAINS</option>
-                                                    <option value="GREATER THAN">GREATER THAN</option>
-                                                    <option value="LESS THAN">LESS THAN</option>
-                                                    <option value="GREATER THAN OR EQUALS">GREATER THAN OR EQUALS</option>
-                                                    <option value="LESS THAN OR EQUALS">LESS THAN OR EQUALS</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Value</label>
-                                                <input class="form-control" type="text" on-change="setConditionValueFromInput" index="{{bidRuleIndex}}.{{conditionIndex}}" value="">
-                                            </div>
-                                            <div class="form-group dsp-condition-row__value-type">
-                                                <label>Value type</label>
-                                                <select class="form-control" on-change="setConditionValueFromDropDown">
-                                                    <option value="number">number</option>
-                                                    <option value="bool">true/false</option>
-                                                    <option value="date">date</option>
-                                                    <option value="string">text</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </template>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Key</th>
+                                                <th>Operator</th>
+                                                <th>Value</th>
+                                                <th>Value type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template is="dom-repeat" items="{{bidRule.Conditions$}}" as="condition" index-as="conditionIndex">
+                                                <tr>
+                                                    <td><input class="form-control" type="text" value="{{condition.Key$::input}}" placeholder="Key"></td>
+                                                    <td>
+                                                        <select class="form-control" value="{{condition.Operator$::change}}">
+                                                            <option value="EQUALS">EQUALS</option>
+                                                            <option value="NOT EQUALS">NOT EQUALS</option>
+                                                            <option value="CONTAINS">CONTAINS</option>
+                                                            <option value="NOT CONTAINS">NOT CONTAINS</option>
+                                                            <option value="GREATER THAN">GREATER THAN</option>
+                                                            <option value="LESS THAN">LESS THAN</option>
+                                                            <option value="GREATER THAN OR EQUALS">GREATER THAN OR EQUALS</option>
+                                                            <option value="LESS THAN OR EQUALS">LESS THAN OR EQUALS</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input class="form-control" type="text" on-change="setConditionValueFromInput" index="{{bidRuleIndex}}.{{conditionIndex}}" value="" placeholder="Value"></td>
+                                                    <td>
+                                                        <select class="form-control" on-change="setConditionValueFromDropDown">
+                                                            <option value="number">number</option>
+                                                            <option value="bool">true/false</option>
+                                                            <option value="date">date</option>
+                                                            <option value="string">text</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
@@ -379,7 +383,7 @@
         </div>
 
         <div class="dsp-item">
-            <button class="btn btn-sm btn-primary" on-click="save">Save</button>
+            <button class="btn btn-sm btn-success" on-click="save">Save</button>
             <button class="btn btn-sm btn-default" on-click="cancel">Close</button>
         </div>
 
@@ -394,6 +398,7 @@
 
             template.save = function(event) {
                 template.model.Save$ += 1;
+                template.model.RedirectUrl$ = template.model.ResourcePath;
             };
 
             template.cancel = function() {

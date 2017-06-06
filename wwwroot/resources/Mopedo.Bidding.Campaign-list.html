@@ -24,14 +24,15 @@
                     <th>Label</th>
                     <th>Days remaining</th>
                     <th>Is valid</th>
+                    <th>Controls</th>
                 </thead>
                 <tbody>
                     <template is="dom-repeat" items="{{model.Entities}}">
                         <tr>
                             <td>{{item.Id$}}</td>
                             <td>{{item.Label$}}</td>
-                            <td>{{item.DaysRemaining$}}</td>
-                            <td>{{item.IsValid$}}</td>
+                            <td>{{item.DaysRemaining}}</td>
+                            <td>{{item.IsValid}}</td>
                             <td>
                                 <button value="{{item.Id$}}" class="btn btn-sm btn-default" on-click="editCampaign">edit</button>
                                 <button value="{{item.Id$}}" class="btn btn-sm btn-default" on-click="deleteCampaign">delete</button>
@@ -63,6 +64,7 @@
 
             template.deleteCampaign = function(event) {
                 const campaignId = event.target.value;
+                template.
                 template.model.Delete$ = `Id=${campaignId}`;
             }
 
