@@ -237,7 +237,7 @@
             <div>
                 <template is="dom-repeat" items="{{model.Entity.BidRules$}}" as="bidRule" index-as="bidRuleIndex">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Bid rule</div>
+                        <div class="panel-heading dsp-bid-rule-header">Bid rule<button class="btn btn-sm btn-default" index="{{bidRuleIndex}}" on-click="deleteBidRule">Delete</button></div>
                         <div class="panel-body">
                             <div class="panel panel-default">
                                 <div class="dsp-bid-rule-header panel-heading">
@@ -256,6 +256,7 @@
                                                 <th>Operator</th>
                                                 <th>Value</th>
                                                 <th>Value type</th>
+                                                <th>Controls</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -283,6 +284,7 @@
                                                             <option value="string">text</option>
                                                         </select>
                                                     </td>
+                                                    <td><button class="btn btn-default btn-sm" index="{{bidRuleIndex}}.{{conditionIndex}}" on-click="deleteCondition">Delete</button></td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -301,7 +303,7 @@
                                 <div class="panel-body">
                                     <template is="dom-repeat" items="{{bidRule.BidTemplates$}}" as="template" index-as="templateIndex">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">Template</div>
+                                            <div class="panel-heading dsp-bid-rule-header">Template <button class="btn btn-default btn-sm" index="{{bidRuleIndex}},{{templateIndex}}" on-click="deleteTemplate">Delete</button></div>
                                             <div class="panel-body">
                                                 <div class="dsp-condition-row">
                                                     <div class="form-group">
@@ -322,8 +324,8 @@
                                                 </div>
                                                 <h6>Ad Ids</h6>
                                                 <ul class="list-group">
-                                                    <template is="dom-repeat" items="{{template.AdIds$}}" as="id">
-                                                        <li class="list-group-item">{{id}}</li>
+                                                    <template is="dom-repeat" items="{{template.AdIds$}}" as="id" index-as="adIndex">
+                                                        <li class="list-group-item">{{id}} <button class="btn btn-default btn-sm" index="{{bidRuleIndex}},{{templateIndex}},{{adIndex}}" on-click="deleteIdFromTemplate">Delete</button></li>
                                                     </template>
                                                 </ul>
                                                 <div class="dsp-input-with-button">
@@ -502,6 +504,27 @@
                 const conditionIndex = index.split(".")[1];
                 template.model.Entity.BidRules$[bidRuleIndex].Conditions$[conditionIndex].Value$ = `@RESTar(${value})`;
             } 
+
+            template.deleteCondition = function(event) {
+                const index = event.target.index;
+                const bidRuleIndex = index.split(".")[0];
+                const conditionIndex = index.split(".")[1];
+                template.model.RemoveElementFrom$ = `BidRules$.${bidRuleIndex}.Conditions$,${conditionIndex}`;
+            }
+
+            template.deleteIdFromTemplate = function(event) {
+                const indexes = event.target.index.split(",");
+                template.model.RemoveElementFrom$ = `BidRules$.${indexes[0]}.BidTemplates$.${indexes[1]}.AdIds$,${indexes[2]}`;
+            }
+
+            template.deleteTemplate = function(event) {
+                const indexes = event.target.index.split(",");
+                template.model.RemoveElementFrom$ = `BidRules$.${indexes[0]}.BidTemplates$,${indexes[1]}`;
+            }
+
+            template.deleteBidRule = function(event) {
+                template.model.RemoveElementFrom$ = `BidRules$,${event.target.index}`;
+            }
         })();
     </script>
 </template>
