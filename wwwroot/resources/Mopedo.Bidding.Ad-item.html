@@ -81,9 +81,12 @@
         <form class="dsp-item">
             <fieldset>
                 <legend>Categories</legend>
-                <ul>
+                <ul class="list-group">
                     <template is="dom-repeat" items="{{model.Entity.Categories$}}">
-                        <li>{{item}}</li>
+                        <li class="list-group-item">
+                            {{item}}
+                            <button class="btn btn-default btn-sm" index="{{index}}" on-click="deleteCategory">Delete</button>
+                        </li>
                     </template>
                 </ul>
                 <div class="dsp-input-with-button">
@@ -138,8 +141,15 @@
 
             template.addCategory = function(event) {
                 const inputElement = event.target.previousElementSibling;
-                template.model.AddElementTo$ = `Categories$,"${inputElement.value}"`;
-                inputElement.value = "";
+                if (inputElement.value) {
+                    template.model.AddElementTo$ = `Categories$,"${inputElement.value}"`;
+                    inputElement.value = "";
+                }
+            }
+
+            template.deleteCategory = function(event) {
+                const index = event.target.index;
+                template.model.RemoveElementFrom$ = `Categories$,${index}`;
             }
 
             template.save = function(event) {
