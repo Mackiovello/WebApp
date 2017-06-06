@@ -59,14 +59,18 @@
             <fieldset>
                 <legend>Dates</legend>
                 <div class="dsp-item__row">
-                    <label>Start date
+                    <label>Change start date
                         <input class="form-control" type="date" value="{{model.Entity.StartDateTime$::input}}">
                         <small class="form-text text-muted">The point in time when the campaign begins</small>
                     </label>
-                    <label>End Date
+                    <label>Change end date
                         <input class="form-control" type="date" value="{{model.Entity.EndDateTime$::input}}">
                         <small class="form-text text-muted">The point in time when the campaign ends</small>
                     </label>
+                </div>
+                <div>
+                    <p>Start date: {{model.Entity.StartDateTime$}}</p>
+                    <p>End date: {{model.Entity.EndDateTime$}}</p>
                 </div>
                 <p class="dsp-form-text-block">
                     Remaining days: {{model.Entity.DaysRemaining}}
@@ -317,9 +321,9 @@
                                                     </div>
                                                 </div>
                                                 <h6>Ad Ids</h6>
-                                                <ul>
+                                                <ul class="list-group">
                                                     <template is="dom-repeat" items="{{template.AdIds$}}" as="id">
-                                                        <li>{{id}}</li>
+                                                        <li class="list-group-item">{{id}}</li>
                                                     </template>
                                                 </ul>
                                                 <div class="dsp-input-with-button">
